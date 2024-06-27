@@ -1,5 +1,5 @@
 import express from "express";
-import recipeRouter from "./routes/recipe.js";
+import recipeRouter from "./routes/recipeRoute.js";
 import mongoose from "mongoose";
 
 // connect to database
@@ -28,6 +28,7 @@ app.delete("/trash", (req, res) => {
 app.use(recipeRouter);
 
 // listen for incoming requests
-app.listen(3000, () => {
-    console.log("app listening on port 3000");
+const port = 8000
+app.listen(port, () => {
+    console.log(`app listening on port ${port}`);
 });
