@@ -1,4 +1,4 @@
-import { RecipeModel } from "../modules/recipeModule.js";
+import { RecipeModel } from "../models/recipeModule.js";
 
 
 // get
