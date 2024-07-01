@@ -11,10 +11,15 @@ export const getRecipes = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+}
 
-export const getRecipeByID = (req, res) => {
-    res.json(`New recipe with id:${req.params.id} received`);
+export const getRecipeByID = async (req, res) => {
+    try {
+        const getSingleRecipe = await RecipeModel.findById(req.params.id);
+        res.json(getSingleRecipe);
+    } catch (error) {
+        next(error);
+    }
 }
 
 // add
@@ -27,12 +32,19 @@ export const addRecipes = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+}
 
 // patch
-export const updateRecipe = (req, res) => {
-    res.json(`Recipe with ID ${req.params.id} Updated `);
-};
+export const updateRecipe = async (req, res) => {
+    try {
+        // update recipe by id
+        const updatedRecipe = await RecipeModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        // return response
+        res.json(updatedRecipe);
+    } catch (error) {
+        next(error);
+    }
+}
 
 // delete 
 export const deleteRecipe = async (req, res, next) => {
@@ -43,4 +55,4 @@ export const deleteRecipe = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+}
