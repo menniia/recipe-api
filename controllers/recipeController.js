@@ -4,17 +4,18 @@ import { RecipeModel } from "../models/recipeModule.js";
 export const getRecipes = async (req, res, next) => {
   try {
     // get query params
-    const { limit, skip, search } = req.query;
+    const { limit, skip, filter, fields } = req.query;
     // get all recipes from database
-    const allRecipes = await RecipeModel.find({ name: search })
+    const allRecipes = await RecipeModel.find(JSON.parse(filter))
+      .select(JSON.parse(fields))
       .limit(limit)
       .skip(skip);
     // return all recipes as response
-    res.json(allRecipes);
+    res.status(200).json(allRecipes);
   } catch (error) {
     next(error);
   }
-};
+}
 
 export const getRecipeByID = async (req, res) => {
   try {
@@ -23,7 +24,7 @@ export const getRecipeByID = async (req, res) => {
   } catch (error) {
     next(error);
   }
-};
+}
 
 // add
 export const addRecipes = async (req, res, next) => {
@@ -35,7 +36,7 @@ export const addRecipes = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}
 
 // patch
 export const updateRecipe = async (req, res) => {
@@ -51,7 +52,7 @@ export const updateRecipe = async (req, res) => {
   } catch (error) {
     next(error);
   }
-};
+}
 
 // delete
 export const deleteRecipe = async (req, res, next) => {
@@ -62,4 +63,4 @@ export const deleteRecipe = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}
