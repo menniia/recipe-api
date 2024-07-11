@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getCategories, postCategory } from "../controllers/categoryController.js";
 import { remoteUpload } from "../middleware/uploads.js";
+import { checkUserSession } from "../middleware/auth.js";
 
 
 

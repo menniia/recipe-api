@@ -4,10 +4,14 @@ import mongoose from "mongoose";
 import categoryRouter from "./routes/categoryRouter.js";
 import expressOasGenerator from "express-oas-generator";
 import userRouter from "./routes/userRoute.js";
-import session from "express-session"
+import session from "express-session";
+import MongoStore from "connect-mongo";
+
 
 // connect to database
 await mongoose.connect(process.env.MONGO_URL);
+
+
 
 // create express app
 const app = express();
@@ -24,21 +28,9 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
     cookie: { secure: true }
 }))
-
-// define routes
-app.get("/", (req, res) => {
-    res.json("Welcome Home");
-});
-
-app.post("/login", (req, res) => {
-    res.json("Login successful");
-});
-
-app.delete("/login", (req, res) => {
-    res.json("Deleted file");
-});
 
 // use routes
 app.use(userRouter);
